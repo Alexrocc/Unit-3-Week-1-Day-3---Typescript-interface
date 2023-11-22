@@ -9,8 +9,6 @@ abstract class Taxes {
 }
 
 class PayingWorker extends Taxes {
-   
-
     constructor(_grossSalary:number){
         super(_grossSalary)
     }
@@ -66,11 +64,9 @@ class Salesman extends PayingWorker {
     constructor (_grossSalary:number) {
         super(_grossSalary)
     }
-
     getIrpefTax(): number {   
         return (this.getUtileTasse() * 15) / 100
     }
-
     getInpsTax(): number {
         return((this.getUtileTasse() * 35) / 100)
     }
