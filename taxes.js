@@ -14,72 +14,70 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 var Taxes = /** @class */ (function () {
-    function Taxes(_grossSalary) {
+    function Taxes(_grossSalary, _irpefTax, _inpsTax) {
         this.grossSalary = _grossSalary;
+        this.irpefTax = _irpefTax;
+        this.inpsTax = _inpsTax;
     }
     return Taxes;
 }());
 var PayingWorker = /** @class */ (function (_super) {
     __extends(PayingWorker, _super);
-    function PayingWorker(_grossSalary) {
-        return _super.call(this, _grossSalary) || this;
+    function PayingWorker(_grossSalary, _irpefTax, _inpsTax) {
+        return _super.call(this, _grossSalary, _irpefTax, _inpsTax) || this;
     }
     PayingWorker.prototype.getUtileTasse = function () {
         return this.grossSalary - ((this.grossSalary * 22) / 100);
     };
     PayingWorker.prototype.getInpsTax = function () {
-        return;
+        return (this.getUtileTasse() * this.irpefTax) / 100;
     };
     PayingWorker.prototype.getIrpefTax = function () {
-        return;
+        return (this.getUtileTasse() * this.inpsTax) / 100;
     };
     PayingWorker.prototype.getNetIncome = function () {
         return this.getUtileTasse() - this.getIrpefTax() - this.getInpsTax();
     };
     return PayingWorker;
 }(Taxes));
-var Professional = /** @class */ (function (_super) {
-    __extends(Professional, _super);
-    function Professional(_grossSalary) {
-        return _super.call(this, _grossSalary) || this;
-    }
-    Professional.prototype.getIrpefTax = function () {
-        return (this.getUtileTasse() * 5) / 100;
-    };
-    Professional.prototype.getInpsTax = function () {
-        return ((this.getUtileTasse() * 25) / 100);
-    };
-    return Professional;
-}(PayingWorker));
-var newProfessional = new Professional(2000);
-console.log(newProfessional.getNetIncome());
-var Artisan = /** @class */ (function (_super) {
-    __extends(Artisan, _super);
-    function Artisan(_grossSalary) {
-        return _super.call(this, _grossSalary) || this;
-    }
-    Artisan.prototype.getIrpefTax = function () {
-        return (this.getUtileTasse() * 15) / 100;
-    };
-    Artisan.prototype.getInpsTax = function () {
-        return ((this.getUtileTasse() * 15) / 100);
-    };
-    return Artisan;
-}(PayingWorker));
-var newArtisan = new Artisan(2000);
-console.log(newArtisan.getNetIncome());
-var Salesman = /** @class */ (function (_super) {
-    __extends(Salesman, _super);
-    function Salesman(_grossSalary) {
-        return _super.call(this, _grossSalary) || this;
-    }
-    Salesman.prototype.getIrpefTax = function () {
-        return (this.getUtileTasse() * 15) / 100;
-    };
-    Salesman.prototype.getInpsTax = function () {
-        return ((this.getUtileTasse() * 35) / 100);
-    };
-    return Salesman;
-}(PayingWorker));
-var newSalesman = new Salesman(2000);
-console.log(newSalesman.getNetIncome());
+var newPayingWorker = new PayingWorker(2000, 5, 25);
+console.log(newPayingWorker.getNetIncome());
+// class Professional extends PayingWorker {
+//     constructor (_grossSalary:number) {
+//         super(_grossSalary)
+//     }
+//     getIrpefTax(): number {   
+//         return (this.getUtileTasse() * 5) / 100
+//     }
+//     getInpsTax(): number {
+//         return((this.getUtileTasse() * 25) / 100)
+//     }
+// }
+// let newProfessional = new Professional(2000)
+// console.log(newProfessional.getNetIncome());
+// class Artisan extends PayingWorker {
+//     constructor (_grossSalary:number) {
+//         super(_grossSalary)
+//     }
+//     getIrpefTax(): number {   
+//         return (this.getUtileTasse() * 15) / 100
+//     }
+//     getInpsTax(): number {
+//         return((this.getUtileTasse() * 15) / 100)
+//     }
+// }
+// let newArtisan = new Artisan(2000)
+// console.log(newArtisan.getNetIncome());
+// class Salesman extends PayingWorker {
+//     constructor (_grossSalary:number) {
+//         super(_grossSalary)
+//     }
+//     getIrpefTax(): number {   
+//         return (this.getUtileTasse() * 15) / 100
+//     }
+//     getInpsTax(): number {
+//         return((this.getUtileTasse() * 35) / 100)
+//     }
+// }
+// let newSalesman = new Salesman(2000)
+// console.log(newSalesman.getNetIncome());
